@@ -9,7 +9,7 @@ export type TaskType = {
 type TodolistPropsType = {
     title: string;
 }
-
+type FilterType = 'All' | 'Active' | 'Completed'
 
 export const Todolist = ({title} :TodolistPropsType) => {
 
@@ -21,6 +21,18 @@ export const Todolist = ({title} :TodolistPropsType) => {
             {id: 4, title: 'ReactJS', isDone: false},
         ]
     )
+    const [filter, setFilter] = useState<FilterType>('All');
+
+    let filteredTasks = tasks;
+    if (filter === 'Active') {
+        filteredTasks = tasks.filter(t => !t.isDone)
+    }
+    if (filter === 'Completed') {
+        filteredTasks = tasks.filter(t => t.isDone)
+    }
+    function changeFilterTasks(value: FilterType) {
+        setFilter(value)
+    }
     function removeTask(id: number) {
         setTasks(tasks.filter(task => task.id !== id))
     }
@@ -31,9 +43,9 @@ export const Todolist = ({title} :TodolistPropsType) => {
                 <input/>
                 <button>+</button>
             </div>
-            {tasks.length === 0
+            {filteredTasks.length === 0
              ? (<span>Елемнты не найдены</span>)
-             :(<ul> {tasks.map((task) => {
+             :(<ul> {filteredTasks.map((task) => {
                     return   <li key={task.id}>
                 <input type="checkbox" checked={task.isDone}/> <span>{task.title}</span>
                         <button onClick={()=> removeTask(task.id)}>X</button>
@@ -41,9 +53,9 @@ export const Todolist = ({title} :TodolistPropsType) => {
             })}
             </ul>)}
             <div>
-                <Button title={'All'} />
-                <Button title={'Active'} />
-                <Button title={'Completed'} />
+                <Button title={'All'} onClick={()=> changeFilterTasks('All')} />
+                <Button title={'Active'} onClick={() =>changeFilterTasks('Active')} />
+                <Button title={'Completed'} onClick={()=> changeFilterTasks('Completed')} />
             </div>
         </div>
     )
