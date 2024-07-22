@@ -6,3 +6,22 @@
 .App > div {
   margin-right: 50px;
 }
+.errorRed{
+  color: red;
+}
+.errorInput{
+  border: 1px solid red;
+}
+
+.filterAll {
+  background-color: teal;
+}
+.filterActive {
+  background-color: green;
+}
+.filterCompleted {
+  background-color: gray;
+}
+.tasksCompleted{
+ opacity: 0.5;
+}
