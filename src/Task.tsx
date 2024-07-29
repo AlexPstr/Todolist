@@ -1,8 +1,12 @@
-import {Button} from "./Button";
+
 import {TaskType} from "./App";
 import {Input} from "./Input";
 import {ChangeEvent, useState} from "react";
 import {EditableSpan} from "./EditableSpan";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+import Checkbox from "@mui/material/Checkbox";
+import Box from "@mui/material/Box";
 
 type TaskPropsType = {
     changeTaskStatus: (tdId: string, taskId: string, value: boolean) => void
@@ -26,11 +30,21 @@ export function Task ({task, changeTaskStatus, taskId, tdId, removeTask,changeTa
     const changeTaskTitleHandler = (title: string) => {
         changeTaskTitle(tdId, taskId, title)
     }
-    return <div className={task.isDone ? 'tasksCompleted' : ''}>
-        <Input changeHandler={changeTaskHandler} checked={task.isDone} type='checkbox'/>
-        <EditableSpan title={task.title} changeTitle={changeTaskTitleHandler}/>
-        <Button title={"X"} onClick={taskRemoveHandler} />
-    </div>
+
+    return <Box className={task.isDone ? 'tasksCompleted' : ''}>
+        <Checkbox
+            checked={task.isDone}
+            onChange={changeTaskHandler}
+        />
+        {/*<Input changeHandler={changeTaskHandler} checked={task.isDone} type='checkbox'/>*/}
+        <EditableSpan
+            title={task.title}
+            changeTitle={changeTaskTitleHandler}/>
+        <IconButton
+            onClick={taskRemoveHandler}>
+            <DeleteIcon />
+        </IconButton>
+    </Box>
 }
 
 

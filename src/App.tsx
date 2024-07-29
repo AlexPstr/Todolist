@@ -1,9 +1,27 @@
 import React, {useState} from 'react';
 import './App.css';
-
+import CssBaseline from '@mui/material/CssBaseline'
 import {v1, v4} from "uuid";
 import {Todolist} from "./Todolist";
 import {AddItemForm} from "./AddItemForm";
+import Box from "@mui/material/Box";
+import List from '@mui/material/List';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import {
+    AppBar,
+    Container,
+    createTheme,
+    Grid,
+    ListItem,
+    SelectChangeEvent,
+    ThemeProvider,
+    Toolbar,
+    Typography
+} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from '@mui/icons-material/Menu';
+import {MenuButton} from "./MenuButton";
 
 export type filterType = 'All' | 'Active' | 'Completed'
 export type todolistType = {
@@ -21,6 +39,7 @@ export type TaskType = {
 export type TasksType = {
     [key: string]: TaskType[]
 }
+export type ThemeMode = 'light' | 'dark' | 'blue'
 export type FilterType = 'All' | 'Active' | 'Completed'
 function App() {
     const id1 = v1()
@@ -85,6 +104,18 @@ function App() {
     function changeTodolistTitle (todolistId: string, title: string) {
         setTodolist(todolist.map(tl => tl.id === todolistId ? {...tl, title}: tl))
     }
+
+    const [themeMode, setThemeMode] = useState('light')
+    const theme = createTheme({palette: {
+            mode:  themeMode === 'dark' ? 'light' : 'dark',
+            primary: {
+                main: '#087EA4',
+            },
+        },})
+
+    const changeModeHandler = () => {
+        setThemeMode(themeMode === 'light' ? 'dark': 'light')
+    }
     const todolistList = todolist.map(tl => {
         let filteredTasks = tasks[tl.id]
         if (tl.filter === 'Active'){
@@ -94,15 +125,16 @@ function App() {
             filteredTasks = tasks[tl.id].filter(task => task.isDone)
         }
 
-        return <div>
+        return <Box>
 
+            <ListItem>
                 <Todolist
                     removeTodolist={removeTodolist}
                     tLtitle={tl.title}
                     removeTask={removeTask}
                     key={tl.id}
                     tlId={tl.id}
-                    tasks = {filteredTasks}
+                    tasks={filteredTasks}
                     changeTaskStatus={changeTaskStatus}
                     addNewTask={addNewTask}
                     changeFilter={changeFilter}
@@ -111,13 +143,47 @@ function App() {
                     changeTodolistTitle={changeTodolistTitle}
 
                 />
-               </div>
+            </ListItem>
+        </Box>
     })
-    return (
-        <div className="App">
-            <h3><AddItemForm addItem={addTodolist} /></h3>
-            {todolistList}
-        </div>
+
+    return (<ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Container>
+                <Box sx={{flexGrow: 1}}>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <IconButton
+                                size="small"
+                                edge="end"
+                                color="inherit"
+                                aria-label="menu"
+
+                            >
+                                <MenuIcon/>
+                            </IconButton>
+                            <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                                News
+                            </Typography>
+                            <MenuButton>Login</MenuButton>
+                            <MenuButton>Logout</MenuButton>
+                            <MenuButton>Faq</MenuButton>
+                            <IconButton onClick={changeModeHandler}  color="inherit">
+                                {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                            </IconButton>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
+                <Box sx={{display: 'flex', minWidth: '400px', paddingLeft: '16px'}}>
+                    <h3><AddItemForm addItem={addTodolist} text={"Add Todolist"}/></h3>
+                </Box>
+                <Grid>
+                    <List sx={{display: 'flex', flexWrap: 'wrap'}}>
+                        {todolistList}
+                    </List>
+                </Grid>
+            </Container>
+        </ThemeProvider>
     );
 }
 

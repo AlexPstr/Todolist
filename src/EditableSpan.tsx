@@ -1,12 +1,12 @@
-import {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {Input} from "./Input";
 import './App.css'
+import TextField from "@mui/material/TextField";
 type EditableTaskPropsType = {
     title: string,
     changeTitle: (title: string) => void
 }
 export function EditableSpan ( {title,changeTitle}: EditableTaskPropsType ) {
-    debugger
     const  [editMode, setEditMode] = useState<boolean>(false)
     const [newTitle, setNewTitle] = useState(title)
     const [error, setError] = useState<null | string>(null)
@@ -28,8 +28,18 @@ export function EditableSpan ( {title,changeTitle}: EditableTaskPropsType ) {
         <>
             {editMode
                 ? <div>
-                    {{error} ? <div className={'errorRed'}>{error}</div>: ''}
-                 <Input autoFocus={true}  onBlur={changeEditModHandler} type={'text'} changeHandler={changeTitleHandler} value={newTitle} />
+                    <TextField
+                        id="standard-basic"
+                        label="Enter Title"
+                        value={newTitle}
+                        variant="filled"
+                        helperText={error}
+                        size="small"
+                        error={!!error}
+                        onChange={changeTitleHandler}
+                        autoFocus={true}
+                        onBlur={changeEditModHandler}
+                    />
                     </div>
 
 

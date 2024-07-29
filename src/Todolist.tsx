@@ -1,11 +1,15 @@
 import {FilterType, TaskType} from "./App";
 import {Task} from "./Task";
-import {Button} from "./Button";
-import {Input} from "./Input";
-import React, {ChangeEvent, useState} from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
 import './App.css';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import Button from '@mui/material/Button';
+import cls from './Todolist.module.css'
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import {List, ListItem, Paper} from "@mui/material";
+import {PaperStyles} from "./Todolist.styles";
 
 type TodolistType = {
     tasks: TaskType[]
@@ -35,7 +39,7 @@ export function Todolist ({tasks,
 
 }: TodolistType) {
 
-    const tasksList = tasks.map((task: TaskType) => <Task
+    const tasksList = tasks.map((task: TaskType) => <ListItem> <Task
         taskId={task.id}
         tdId={tlId}
         key={task.id}
@@ -44,9 +48,8 @@ export function Todolist ({tasks,
         task={task}
         changeTaskTitle={changeTaskTitle}
 
-    />)
-
-
+    />
+    </ListItem>)
 
     const addTaskHandler = (title: string,) => {
         addNewTask(tlId, title)
@@ -58,25 +61,41 @@ export function Todolist ({tasks,
     const changeTodolistTitleHandler = (title: string) => {
         changeTodolistTitle(tlId,title)
     }
-    return <div>
-        <h3>
-            <EditableSpan title={tLtitle} changeTitle={changeTodolistTitleHandler} />
-            <Button title={'X'} onClick={removeTaskHandler} />
-        </h3>
-        <div>
-            <AddItemForm addItem={addTaskHandler}/>
-            {tasksList}
-        </div>
-        <div>
-            <Button cls={filter === "All" ? 'filterAll' : ''} title={'All'} onClick={() => {
-                changeFilter(tlId, 'All')
-            }}/>
-            <Button cls={filter === "Active" ? 'filterActive' : ''} title={'Active'} onClick={() => {
-                changeFilter(tlId, 'Active')
-            }}/>
-            <Button cls={filter === "Completed" ? 'filterCompleted' : ''} title={'Completed'} onClick={() => {
-                changeFilter(tlId, 'Completed')
-            }}/>
-        </div>
-    </div>
+    return <Paper sx={PaperStyles}>
+        <Box>
+            <h3 className={cls.todoTitle}>
+                <Box >
+                    <EditableSpan title={tLtitle} changeTitle={changeTodolistTitleHandler}/>
+                    <IconButton onClick={removeTaskHandler}>
+                        <DeleteIcon/>
+                    </IconButton>
+                </Box>
+            </h3>
+            <AddItemForm text={"Add Task"} addItem={addTaskHandler}/>
+            <List>
+                {tasksList}
+            </List>
+            <Button
+                variant={filter === "All" ? 'contained' : 'outlined'}
+                onClick={() => changeFilter(tlId, 'All')}
+                color={'primary'}
+            >
+                All
+            </Button>
+            <Button
+                variant={filter === "Active" ? 'contained' : 'outlined'}
+                onClick={() => changeFilter(tlId, 'Active')}
+                color={'secondary'}
+            >
+                Active
+            </Button>
+            <Button
+                variant={filter === "Completed" ? 'contained' : 'outlined'}
+                title={'Completed'} onClick={() => changeFilter(tlId, 'Completed')}
+                color={'success'}
+            >
+                Completed
+            </Button>
+    </Box>
+        </Paper>
 }

@@ -1,10 +1,14 @@
 import {Input} from "./Input";
 import {Button} from "./Button";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import React, {ChangeEvent, useState} from "react";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
 type AddItemPropsType = {
     addItem: (title: string) => void;
+    text: string;
 }
-export function AddItemForm ({addItem}: AddItemPropsType): JSX.Element  {
+export function AddItemForm ({addItem,text}: AddItemPropsType): JSX.Element  {
 
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<null | string>(null)
@@ -24,8 +28,18 @@ export function AddItemForm ({addItem}: AddItemPropsType): JSX.Element  {
 
     }
     return <>
-        <Input cls={error ? 'errorInput' : ''} type={'text'} changeHandler={changeTitleHandler} value={title}/>
-        <Button title={'Add'} onClick={addItemHandler}/>
-        {error && <div className={error ? 'errorRed' : ''}>{error}</div>}
+        <TextField
+            id="standard-basic"
+            label={text}
+            value={title}
+            variant="outlined"
+            size="small"
+            helperText={error}
+            error={!!error}
+            onChange={changeTitleHandler}
+        />
+        <IconButton color={"primary"} onClick={addItemHandler}>
+            <AddCircleOutlineIcon />
+        </IconButton>
     </>
 }
