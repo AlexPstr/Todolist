@@ -14,7 +14,6 @@ import {
     createTheme,
     Grid,
     ListItem,
-    SelectChangeEvent,
     ThemeProvider,
     Toolbar,
     Typography
@@ -71,7 +70,7 @@ function App() {
         const newTask = {id: v1(), title, isDone: false}
         setTasks({...tasks, [todolistId]: [...tasks[todolistId],newTask ]})
     }
-    function changeFilter (tlId: string, filter: filterType) {
+    function changeTodolistFilter (tlId: string, filter: filterType) {
         setTodolist(todolist.map(tl => tl.id === tlId ? {...tl, filter: filter} : tl))
     }
     function removeTask (tlId: string, taskId: string)  {
@@ -137,7 +136,7 @@ function App() {
                     tasks={filteredTasks}
                     changeTaskStatus={changeTaskStatus}
                     addNewTask={addNewTask}
-                    changeFilter={changeFilter}
+                    changeFilter={changeTodolistFilter}
                     filter={tl.filter}
                     changeTaskTitle={changeTaskTitle}
                     changeTodolistTitle={changeTodolistTitle}
