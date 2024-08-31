@@ -10,9 +10,11 @@ import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import {List, ListItem, Paper} from "@mui/material";
 import {PaperStyles} from "./Todolist.styles";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "./state/store";
 
 type TodolistType = {
-    tasks: TaskType[]
+    tasks?: Array<TaskType>;
     changeTaskStatus: (tdId: string, taskId: string, value: boolean) => void
     addNewTask: (tlId: string, title: string) => void
     changeFilter: (tlId: string, value: FilterType) => void
@@ -26,7 +28,7 @@ type TodolistType = {
 }
 
 
-export function Todolist ({tasks,
+export function Todolist ({
                               changeTaskStatus,
                               tlId, addNewTask,
                               changeFilter,
@@ -38,8 +40,19 @@ export function Todolist ({tasks,
                               changeTodolistTitle
 
 }: TodolistType) {
+    let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[tlId])
 
-    const tasksList = tasks.map((task: TaskType) => <ListItem> <Task
+
+    if (filter === 'Active'){
+        tasks = tasks.filter(task => !task.isDone)
+    }
+    if (filter === 'Completed'){
+        tasks = tasks.filter(task => task.isDone)
+    }
+
+    const tasksList = tasks.map((task: TaskType) =>
+        <ListItem key={task.id} > <Task
+
         taskId={task.id}
         tdId={tlId}
         key={task.id}
