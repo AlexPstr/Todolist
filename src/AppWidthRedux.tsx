@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useCallback, useReducer, useState} from 'react';
 import './App.css';
 import CssBaseline from '@mui/material/CssBaseline'
 import {Todolist} from "./Todolist";
@@ -56,37 +56,37 @@ function AppWidthRedux () {
     const todolist = useSelector<AppRootStateType, todolistType[]>(state => state.todolist)
     const dispatch = useDispatch();
     //task
-    function changeTaskStatus (todolistId: string, taskId: string, value: boolean){
+    const changeTaskStatus = useCallback((todolistId: string, taskId: string, value: boolean)=>{
         dispatch(changeTaskStatusAC(todolistId, taskId, value))
-    }
-    function addNewTask (todolistId:string, title: string) {
+    },[dispatch])
+    const addNewTask = useCallback((todolistId:string, title: string) => {
         dispatch(taskAddAC(todolistId, title))
-    }
-    function changeTodolistFilter (tlId: string, filter: filterType) {
+    },[dispatch])
+    const changeTodolistFilter = useCallback((tlId: string, filter: filterType)=> {
         dispatch(changeTodolistFilterAC(tlId, filter))
-    }
-    function removeTask (tlId: string, taskId: string)  {
+    },[dispatch])
+    const removeTask = useCallback((tlId: string, taskId: string) =>  {
         dispatch(removeTaskAC(tlId, taskId))
 
-    }
+    },[dispatch])
     // todolist
 
-    function removeTodolist (todolistId:string)  {
+    const removeTodolist = useCallback((todolistId:string) => {
         dispatch(removeTodolistAC(todolistId))
-    }
+    },[dispatch])
 
-    function addTodolist (title: string) {
+    const addTodolist = useCallback((title: string) => {
         const tlId = v1()
         dispatch(addTodolistAC(tlId, title))
-    }
+    },[dispatch])
 
-    function changeTaskTitle (todolistId: string, taskId: string, title: string) {
+    const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string)=> {
         dispatch(changeTaskTitleAC(todolistId, taskId, title))
-    }
+    },[])
 
-    function changeTodolistTitle (todolistId: string, title: string) {
+    const changeTodolistTitle = useCallback((todolistId: string, title: string) =>{
         dispatch(changeTodolistTitleAC(todolistId, title))
-    }
+    },[])
 
     const [themeMode, setThemeMode] = useState('light')
     const theme = createTheme({palette: {
@@ -96,9 +96,9 @@ function AppWidthRedux () {
             },
         },})
 
-    const changeModeHandler = () => {
+    const changeModeHandler = useCallback(() => {
         setThemeMode(themeMode === 'light' ? 'dark': 'light')
-    }
+    },[])
     const todolistList = todolist.map(tl => {
 
 

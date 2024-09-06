@@ -1,7 +1,7 @@
 
 import {TaskType} from "./App";
 import {Input} from "./Input";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, memo, useCallback, useState} from "react";
 import {EditableSpan} from "./EditableSpan";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
@@ -18,7 +18,9 @@ type TaskPropsType = {
 }
 
 
-export function Task ({task, changeTaskStatus, taskId, tdId, removeTask,changeTaskTitle}: TaskPropsType) {
+export const Task = memo(({task, changeTaskStatus, taskId, tdId, removeTask,changeTaskTitle}: TaskPropsType) => {
+
+    console.log('Task rendered')
     const changeTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.checked
         changeTaskStatus(tdId, taskId, value)
@@ -27,9 +29,9 @@ export function Task ({task, changeTaskStatus, taskId, tdId, removeTask,changeTa
     const taskRemoveHandler = () => {
         removeTask(tdId, taskId)
     }
-    const changeTaskTitleHandler = (title: string) => {
+    const changeTaskTitleHandler = useCallback((title: string) => {
         changeTaskTitle(tdId, taskId, title)
-    }
+    },[tdId, taskId])
 
     return <Box className={task.isDone ? 'tasksCompleted' : ''}>
         <Checkbox
@@ -45,7 +47,7 @@ export function Task ({task, changeTaskStatus, taskId, tdId, removeTask,changeTa
             <DeleteIcon />
         </IconButton>
     </Box>
-}
+})
 
 
 

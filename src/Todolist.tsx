@@ -12,6 +12,7 @@ import {List, ListItem, Paper} from "@mui/material";
 import {PaperStyles} from "./Todolist.styles";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
+import {memo, useCallback} from "react";
 
 type TodolistType = {
     tasks?: Array<TaskType>;
@@ -28,7 +29,7 @@ type TodolistType = {
 }
 
 
-export function Todolist ({
+export const Todolist = memo(({
                               changeTaskStatus,
                               tlId, addNewTask,
                               changeFilter,
@@ -39,7 +40,10 @@ export function Todolist ({
                               changeTaskTitle,
                               changeTodolistTitle
 
-}: TodolistType) {
+}: TodolistType) => {
+    console.log('Todolist Called')
+
+
     let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[tlId])
 
 
@@ -64,16 +68,16 @@ export function Todolist ({
     />
     </ListItem>)
 
-    const addTaskHandler = (title: string,) => {
+    const addTaskHandler = useCallback( (title: string,) => {
         addNewTask(tlId, title)
-    }
-    const removeTaskHandler = () => {
+    },[tlId])
+    const removeTaskHandler = useCallback(() => {
         removeTodolist(tlId)
-    }
+    },[tlId])
 
-    const changeTodolistTitleHandler = (title: string) => {
+    const changeTodolistTitleHandler = useCallback((title: string) => {
         changeTodolistTitle(tlId,title)
-    }
+    },[tlId])
     return <Paper sx={PaperStyles}>
         <Box>
             <h3 className={cls.todoTitle}>
@@ -111,4 +115,4 @@ export function Todolist ({
             </Button>
     </Box>
         </Paper>
-}
+})
