@@ -1,12 +1,11 @@
 
-import {TaskType} from "./App";
-import {Input} from "./Input";
-import {ChangeEvent, memo, useCallback, useState} from "react";
+import {ChangeEvent, memo, useCallback} from "react";
 import {EditableSpan} from "./EditableSpan";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
+import {TaskType} from "./model/tasks-reducer";
 
 type TaskPropsType = {
     changeTaskStatus: (tdId: string, taskId: string, value: boolean) => void

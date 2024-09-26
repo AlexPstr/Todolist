@@ -1,8 +1,8 @@
-import React, {useReducer, useState} from 'react';
+/*import React, {useReducer, useState} from 'react';
 import './App.css';
 import CssBaseline from '@mui/material/CssBaseline'
 import {v1, v4} from "uuid";
-import {Todolist} from "./Todolist";
+import {Tasks} from "./Tasks";
 import {AddItemForm} from "./AddItemForm";
 import Box from "@mui/material/Box";
 import List from '@mui/material/List';
@@ -21,8 +21,7 @@ import {
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuButton} from "./MenuButton";
-import {changeTodolistFilterAC, todolistsReducer} from "./model/todolists-reducer";
-import {changeTaskStatusAC, taskAddAC, tasksReducer} from "./model/tasks-reducer";
+
 
 export type filterType = 'All' | 'Active' | 'Completed'
 export type todolistType = {
@@ -127,7 +126,7 @@ function App() {
         return <Box>
 
             <ListItem>
-                <Todolist
+                <Tasks
                     removeTodolist={removeTodolist}
                     tLtitle={tl.title}
                     removeTask={removeTask}
@@ -174,7 +173,7 @@ function App() {
                     </AppBar>
                 </Box>
                 <Box sx={{display: 'flex', minWidth: '400px', paddingLeft: '16px'}}>
-                    <h3><AddItemForm addItem={addTodolist} text={"Add Todolist"}/></h3>
+                    <h3><AddItemForm addItem={addTodolist} text={"Add Tasks"}/></h3>
                 </Box>
                 <Grid>
                     <List sx={{display: 'flex', flexWrap: 'wrap'}}>
@@ -186,4 +185,4 @@ function App() {
     );
 }
 
-export default App;
+export default App;*/

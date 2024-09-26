@@ -1,8 +1,14 @@
-import {TasksType} from "../App";
-import {AddTask} from "@mui/icons-material";
+
 import {v1} from "uuid";
 import {AddTodolistAT, RemoveTodolistAT} from "./todolists-reducer";
-
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+export type TasksType = {
+    [key: string]: TaskType[]
+}
 type AddTaskAT = ReturnType<typeof taskAddAC>;
 type RemoveTaskAT = ReturnType<typeof removeTaskAC>
 type ChangeTaskStatusAT = ReturnType<typeof changeTaskStatusAC>

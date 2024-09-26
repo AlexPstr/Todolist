@@ -1,5 +1,12 @@
-import {filterType, todolistType} from "../App";
-import {v1} from "uuid";
+
+export type filterType = 'All' | 'Active' | 'Completed'
+export type todolistType = {
+    id: string
+    title: string
+    filter: filterType;
+}
+
+
 
 export type RemoveTodolistAT = {
     type: 'REMOVE_TODOLIST'

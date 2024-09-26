@@ -5,6 +5,7 @@ type ButtonPropsType = {
 }
 
 export function Button ({cls,title, onClick}: ButtonPropsType) {
+    console.log(title)
 const onClickHandler = ()=> {
     onClick()
     }

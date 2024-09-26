@@ -1,6 +1,6 @@
-import {TasksType, todolistType} from "../App";
-import {addTodolistAC, removeTodolistAC, todolistsReducer} from "./todolists-reducer";
-import {tasksReducer} from "./tasks-reducer";
+
+import {addTodolistAC, removeTodolistAC, todolistsReducer, todolistType} from "./todolists-reducer";
+import {tasksReducer, TasksType} from "./tasks-reducer";
 import {v1} from "uuid";
 
 test('id todolist and id task must be equal', () => {

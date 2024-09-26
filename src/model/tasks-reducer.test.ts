@@ -1,7 +1,6 @@
-import {useState} from "react";
+
 import {v1} from "uuid";
-import {TasksType} from "../App";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskAddAC, tasksReducer} from "./tasks-reducer";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskAddAC, tasksReducer, TasksType} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
 let tasks: TasksType;
 let id1 = v1()
